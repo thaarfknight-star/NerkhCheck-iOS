@@ -1,0 +1,242 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+/* Begin PBXFileReference section */
+		2185D6C543AC31D446E4AD75 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/MainTabView.swift; sourceTree = <group>; };
+		257527E81879BDF55D516962 = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NerkhCheck.entitlements; sourceTree = <group>; };
+		2E4907C4DAADF31785A07A71 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/ConverterView.swift; sourceTree = <group>; };
+		50E810369B1274C5ACAF12CE = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels/AppState.swift; sourceTree = <group>; };
+		60047FA7F5982AAEF70D433C = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/AppTheme.swift; sourceTree = <group>; };
+		69E4D2D025B79E9893BCBE9B = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/Models.swift; sourceTree = <group>; };
+		71332B4B13E634A20A883108 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NerkhCheckWidget.swift; sourceTree = <group>; };
+		8D61BEB22A104B60A5A71826 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = <group>; };
+		8D61BEB22A104B60A5A71826 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = <group>; };
+		8F9B3A24C2BA73EAC41969A9 = {isa = PBXFileReference; explicitFileType = wrapper.application; path = NerkhCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D58F2AE380D9EEC6A77F7515 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/PriceRepository.swift; sourceTree = <group>; };
+		D9E819FF347359DE0E30C4A9 = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = <group>; };
+		E18FFB671DC10684FDBB2423 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/SettingsView.swift; sourceTree = <group>; };
+		E2BBDDE194714E3F6D960805 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util/Formatters.swift; sourceTree = <group>; };
+		EA8F31F250821C2E42D0325F = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NerkhCheckWidget.entitlements; sourceTree = <group>; };
+		EC4F5D5B82748F9D7B9E8140 = {isa = PBXFileReference; explicitFileType = wrapper.app-extension; path = NerkhCheckWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		F10EB2BF7780B87231B508A7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NerkhCheckApp.swift; sourceTree = <group>; };
+		FDBD0845FF4EDE8F45DDA027 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/PriceListView.swift; sourceTree = <group>; };
+/* End PBXFileReference section */
+/* Begin PBXBuildFile section */
+		0B659B1B622E19CAD9171705 /* embed:appex in phase */ = {isa = PBXBuildFile; fileRef = EC4F5D5B82748F9D7B9E8140; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, );}; };
+		1E51B77402D36D8CBF8CC16D /* app-src:Views/MainTabView.swift in phase */ = {isa = PBXBuildFile; fileRef = 2185D6C543AC31D446E4AD75; };
+		2417850F8686961F4C2A2BDE /* app-src:Models/Models.swift in phase */ = {isa = PBXBuildFile; fileRef = 69E4D2D025B79E9893BCBE9B; };
+		27F8EAF7D911A03B7AE497C2 /* app-src:Views/PriceListView.swift in phase */ = {isa = PBXBuildFile; fileRef = FDBD0845FF4EDE8F45DDA027; };
+		2A6316A1F151151B95DBBB11 /* app-src:Services/PriceRepository.swift in phase */ = {isa = PBXBuildFile; fileRef = D58F2AE380D9EEC6A77F7515; };
+		337B4FE65F88A5FDE183B844 /* widget-src:Models/Models.swift in phase */ = {isa = PBXBuildFile; fileRef = 69E4D2D025B79E9893BCBE9B; };
+		38A3C369E47993921B8A2316 /* app-src:NerkhCheckApp.swift in phase */ = {isa = PBXBuildFile; fileRef = F10EB2BF7780B87231B508A7; };
+		3D144C34AFE29964E4AD5ECD /* widget-src:Services/PriceRepository.swift in phase */ = {isa = PBXBuildFile; fileRef = D58F2AE380D9EEC6A77F7515; };
+		6E7FDF4010AD6F9BFB0D38C6 /* widget-src:Models/AppTheme.swift in phase */ = {isa = PBXBuildFile; fileRef = 60047FA7F5982AAEF70D433C; };
+		8AA0C0E7626990DBE79691F6 /* app-res:assets in phase */ = {isa = PBXBuildFile; fileRef = D9E819FF347359DE0E30C4A9; };
+		8CC971803F60E0A3EF8B13EB /* widget-src:main in phase */ = {isa = PBXBuildFile; fileRef = 71332B4B13E634A20A883108; };
+		A5305D19728A9616A2081107 /* widget-src:Util/Formatters.swift in phase */ = {isa = PBXBuildFile; fileRef = E2BBDDE194714E3F6D960805; };
+		A65D96EC3BCC525764B00355 /* app-src:ViewModels/AppState.swift in phase */ = {isa = PBXBuildFile; fileRef = 50E810369B1274C5ACAF12CE; };
+		C94FF209B3BF6AAC1C06A216 /* app-src:Util/Formatters.swift in phase */ = {isa = PBXBuildFile; fileRef = E2BBDDE194714E3F6D960805; };
+		D7443847CB421C120B78F73F /* app-src:Views/SettingsView.swift in phase */ = {isa = PBXBuildFile; fileRef = E18FFB671DC10684FDBB2423; };
+		DB661FB615E0B4BE33760B8B /* app-src:Views/ConverterView.swift in phase */ = {isa = PBXBuildFile; fileRef = 2E4907C4DAADF31785A07A71; };
+		EF1B1B855618B2B055B23288 /* app-src:Models/AppTheme.swift in phase */ = {isa = PBXBuildFile; fileRef = 60047FA7F5982AAEF70D433C; };
+/* End PBXBuildFile section */
+/* Begin PBXGroup section */
+		05B7FA239A891890C7F8C10F = {isa = PBXGroup; children = (50E810369B1274C5ACAF12CE); path = ViewModels; sourceTree = <group>; };
+		17788EB861A1637037E558DB = {isa = PBXGroup; children = (69E4D2D025B79E9893BCBE9B, 60047FA7F5982AAEF70D433C); path = Models; sourceTree = <group>; };
+		3D5CD09FBB0DD2085C826316 = {isa = PBXGroup; children = (2185D6C543AC31D446E4AD75, FDBD0845FF4EDE8F45DDA027, 2E4907C4DAADF31785A07A71, E18FFB671DC10684FDBB2423); path = Views; sourceTree = <group>; };
+		518DA81DB9B99529C0C0AEBE = {isa = PBXGroup; children = (82CF2A43A7100F086D7FCFDD, EC21069A65F2CA977FE14A64, 547D009064F7C3F13BEF3460); sourceTree = <group>; };
+		547D009064F7C3F13BEF3460 = {isa = PBXGroup; children = (8F9B3A24C2BA73EAC41969A9, EC4F5D5B82748F9D7B9E8140); name = Products; sourceTree = <group>; };
+		82CF2A43A7100F086D7FCFDD = {isa = PBXGroup; children = (F10EB2BF7780B87231B508A7, 17788EB861A1637037E558DB, 869AE5B1BD5A5BB1C0DF218A, B8BCF0B227C26EB91021DDF0, 05B7FA239A891890C7F8C10F, 3D5CD09FBB0DD2085C826316, 8D61BEB22A104B60A5A71826, 257527E81879BDF55D516962, D9E819FF347359DE0E30C4A9); path = NerkhCheck; sourceTree = <group>; };
+		869AE5B1BD5A5BB1C0DF218A = {isa = PBXGroup; children = (E2BBDDE194714E3F6D960805); path = Util; sourceTree = <group>; };
+		B8BCF0B227C26EB91021DDF0 = {isa = PBXGroup; children = (D58F2AE380D9EEC6A77F7515); path = Services; sourceTree = <group>; };
+		EC21069A65F2CA977FE14A64 = {isa = PBXGroup; children = (71332B4B13E634A20A883108, 8D61BEB22A104B60A5A71826, EA8F31F250821C2E42D0325F); path = NerkhCheckWidget; sourceTree = <group>; };
+/* End PBXGroup section */
+/* Begin PBXSourcesBuildPhase section */
+		220C0D6758212FE888A01291 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (337B4FE65F88A5FDE183B844, 6E7FDF4010AD6F9BFB0D38C6, A5305D19728A9616A2081107, 3D144C34AFE29964E4AD5ECD, 8CC971803F60E0A3EF8B13EB); runOnlyForDeploymentPostprocessing = 0; };
+		2FB286088BD0BF8AE88E0D78 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (38A3C369E47993921B8A2316, 2417850F8686961F4C2A2BDE, EF1B1B855618B2B055B23288, C94FF209B3BF6AAC1C06A216, 2A6316A1F151151B95DBBB11, A65D96EC3BCC525764B00355, 1E51B77402D36D8CBF8CC16D, 27F8EAF7D911A03B7AE497C2, DB661FB615E0B4BE33760B8B, D7443847CB421C120B78F73F); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+/* Begin PBXFrameworksBuildPhase section */
+		9E88FEF503C1E40FDF23CCDE = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		CBF680522761010FEF9A3105 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+/* Begin PBXResourcesBuildPhase section */
+		B156C1E46BE15DE52AC798A1 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (8AA0C0E7626990DBE79691F6); runOnlyForDeploymentPostprocessing = 0; };
+		B2EB01E0E895CE4CFAAEAFC4 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+/* Begin PBXCopyFilesBuildPhase section */
+		0894E2626683DBE9DB5F3530 = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 13; files = (0B659B1B622E19CAD9171705); name = "Embed App Extensions"; runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXCopyFilesBuildPhase section */
+/* Begin PBXContainerItemProxy section */
+		99E6A51DA0B86FE48AEB34ED = {isa = PBXContainerItemProxy; containerPortal = F1424A3701C5602F57292C1D; proxyType = 1; remoteGlobalIDString = 0661F517A86C8F5C87C0EDBA; remoteInfo = NerkhCheckWidget; };
+/* End PBXContainerItemProxy section */
+/* Begin PBXTargetDependency section */
+		EE1DEC3FECAFB049B3EB4C70 = {isa = PBXTargetDependency; target = E3435DDA2687639586BF0B70; targetProxy = 99E6A51DA0B86FE48AEB34ED; };
+/* End PBXTargetDependency section */
+/* Begin XCBuildConfiguration section */
+		0615050D04BD2DC4E6CFFAFF /* app:Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+			CODE_SIGN_ENTITLEMENTS = NerkhCheck/NerkhCheck.entitlements;
+			CODE_SIGN_STYLE = Automatic;
+			INFOPLIST_FILE = NerkhCheck/Info.plist;
+			LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
+			PRODUCT_BUNDLE_IDENTIFIER = com.chandeh.app;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2400F71B974292CB576F1869 /* widget:Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			CODE_SIGN_ENTITLEMENTS = NerkhCheck/NerkhCheckWidget.entitlements;
+			CODE_SIGN_STYLE = Automatic;
+			INFOPLIST_FILE = NerkhCheck/NerkhCheckWidget/Info.plist;
+			LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks");
+			PRODUCT_BUNDLE_IDENTIFIER = "com.chandeh.app.NerkhCheckWidget";
+			SKIP_INSTALL = YES;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2761849A6D0E26CA4E1817A1 /* app:Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+			CODE_SIGN_ENTITLEMENTS = NerkhCheck/NerkhCheck.entitlements;
+			CODE_SIGN_STYLE = Automatic;
+			INFOPLIST_FILE = NerkhCheck/Info.plist;
+			LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks");
+			PRODUCT_BUNDLE_IDENTIFIER = com.chandeh.app;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4A43692AD8BCEEB8B727C85B /* project:Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			ALWAYS_SEARCH_USER_PATHS = NO;
+			CLANG_ANALYZER_NONNULL = YES;
+			CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+			CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+			CLANG_ENABLE_MODULES = YES;
+			CLANG_ENABLE_OBJC_ARC = YES;
+			CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+			CLANG_WARN_BOOL_CONVERSION = YES;
+			CLANG_WARN_CONSTANT_CONVERSION = YES;
+			CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+			CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+			CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+			CLANG_WARN_EMPTY_BODY = YES;
+			CLANG_WARN_ENUM_CONVERSION = YES;
+			CLANG_WARN_INFINITE_RECURSION = YES;
+			CLANG_WARN_INT_CONVERSION = YES;
+			CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+			CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+			CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+			CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+			CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+			CLANG_WARN_STRICT_PROTOTYPES = YES;
+			CLANG_WARN_SUSPICIOUS_MOVE = YES;
+			CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+			CLANG_WARN_UNREACHABLE_CODE = YES;
+			COPY_PHASE_STRIP = NO;
+			GCC_C_LANGUAGE_STANDARD = gnu17;
+			IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+			SDKROOT = iphoneos;
+			SWIFT_VERSION = 5.0;
+			DEBUG_INFORMATION_FORMAT = dwarf;
+			ENABLE_TESTABILITY = YES;
+			GCC_DYNAMIC_NO_PIC = NO;
+			GCC_OPTIMIZATION_LEVEL = 0;
+			GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)");
+			MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+			MTL_FAST_MATH = YES;
+			ONLY_ACTIVE_ARCH = YES;
+			SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+			SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C28449456A5A705A7479770B /* project:Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			ALWAYS_SEARCH_USER_PATHS = NO;
+			CLANG_ANALYZER_NONNULL = YES;
+			CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+			CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+			CLANG_ENABLE_MODULES = YES;
+			CLANG_ENABLE_OBJC_ARC = YES;
+			CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+			CLANG_WARN_BOOL_CONVERSION = YES;
+			CLANG_WARN_CONSTANT_CONVERSION = YES;
+			CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+			CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+			CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+			CLANG_WARN_EMPTY_BODY = YES;
+			CLANG_WARN_ENUM_CONVERSION = YES;
+			CLANG_WARN_INFINITE_RECURSION = YES;
+			CLANG_WARN_INT_CONVERSION = YES;
+			CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+			CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+			CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+			CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+			CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+			CLANG_WARN_STRICT_PROTOTYPES = YES;
+			CLANG_WARN_SUSPICIOUS_MOVE = YES;
+			CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+			CLANG_WARN_UNREACHABLE_CODE = YES;
+			COPY_PHASE_STRIP = NO;
+			GCC_C_LANGUAGE_STANDARD = gnu17;
+			IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+			SDKROOT = iphoneos;
+			SWIFT_VERSION = 5.0;
+			DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+			ENABLE_NS_ASSERTIONS = NO;
+			GCC_OPTIMIZATION_LEVEL = s;
+			MTL_ENABLE_DEBUG_INFO = NO;
+			MTL_FAST_MATH = YES;
+			SWIFT_COMPILATION_MODE = wholemodule;
+			SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		F6BAC4A516C70E3DCDCADAFC /* widget:Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			CODE_SIGN_ENTITLEMENTS = NerkhCheck/NerkhCheckWidget.entitlements;
+			CODE_SIGN_STYLE = Automatic;
+			INFOPLIST_FILE = NerkhCheck/NerkhCheckWidget/Info.plist;
+			LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks");
+			PRODUCT_BUNDLE_IDENTIFIER = "com.chandeh.app.NerkhCheckWidget";
+			SKIP_INSTALL = YES;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+/* Begin XCConfigurationList section */
+		5505F9AF814A7F0992DE2402 = {isa = XCConfigurationList; buildConfigurations = (0615050D04BD2DC4E6CFFAFF, 2761849A6D0E26CA4E1817A1); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		7EF2517A8FE63F4681EC5EEA = {isa = XCConfigurationList; buildConfigurations = (4A43692AD8BCEEB8B727C85B, C28449456A5A705A7479770B); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		8EB251B5FEF9F9B925BE1907 = {isa = XCConfigurationList; buildConfigurations = (F6BAC4A516C70E3DCDCADAFC, 2400F71B974292CB576F1869); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+/* Begin PBXNativeTarget section */
+		0661F517A86C8F5C87C0EDBA = {isa = PBXNativeTarget; buildConfigurationList = 8EB251B5FEF9F9B925BE1907; buildPhases = (220C0D6758212FE888A01291, CBF680522761010FEF9A3105, B2EB01E0E895CE4CFAAEAFC4); buildRules = (); dependencies = (); name = NerkhCheckWidget; productName = NerkhCheckWidget; productReference = EC4F5D5B82748F9D7B9E8140; productType = "com.apple.product-type.app-extension"; };
+		E3435DDA2687639586BF0B70 = {isa = PBXNativeTarget; buildConfigurationList = 5505F9AF814A7F0992DE2402; buildPhases = (2FB286088BD0BF8AE88E0D78, 9E88FEF503C1E40FDF23CCDE, B156C1E46BE15DE52AC798A1, 0894E2626683DBE9DB5F3530); buildRules = (); dependencies = (EE1DEC3FECAFB049B3EB4C70); name = NerkhCheck; productName = NerkhCheck; productReference = 8F9B3A24C2BA73EAC41969A9; productType = "com.apple.product-type.application"; };
+/* End PBXNativeTarget section */
+/* Begin PBXProject section */
+		F1424A3701C5602F57292C1D = {isa = PBXProject; attributes = { TargetAttributes = { E3435DDA2687639586BF0B70 = { CreatedOnToolsVersion = "16.0"; }; 0661F517A86C8F5C87C0EDBA = { CreatedOnToolsVersion = "16.0"; }; }; }; buildConfigurationList = 7EF2517A8FE63F4681EC5EEA; compatibilityVersion = "Xcode 16.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, fa); mainGroup = 518DA81DB9B99529C0C0AEBE; productRefGroup = 547D009064F7C3F13BEF3460; projectDirPath = ""; projectRoot = ""; targets = (E3435DDA2687639586BF0B70, 0661F517A86C8F5C87C0EDBA); };
+/* End PBXProject section */
+	};
+	rootObject = F1424A3701C5602F57292C1D;
+}
