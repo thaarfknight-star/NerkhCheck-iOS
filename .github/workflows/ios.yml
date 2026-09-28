@@ -16,7 +16,8 @@ jobs:
 
       - name: Build (iPhone Simulator)
         run: |
-          xcodebuild -scheme NerkhCheck \
+          xcodebuild -project NerkhCheck/NerkhCheck.xcodeproj \
+            -scheme NerkhCheck \
             -sdk iphonesimulator \
             -destination 'platform=iOS Simulator,name=iPhone 16' \
             -derivedDataPath build \
