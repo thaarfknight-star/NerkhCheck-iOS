@@ -59,6 +59,7 @@
 		69E4D2D025B79E9893BCBE9B /* Models/Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		71332B4B13E634A20A883108 /* NerkhCheckWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NerkhCheckWidget.swift; sourceTree = "<group>"; };
 		8D61BEB22A104B60A5A71826 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0C6C0380F35049D3AB243AB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F9B3A24C2BA73EAC41969A9 /* NerkhCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = NerkhCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58F2AE380D9EEC6A77F7515 /* Services/PriceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRepository.swift; sourceTree = "<group>"; };
 		D9E819FF347359DE0E30C4A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -170,7 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				71332B4B13E634A20A883108 /* NerkhCheckWidget.swift */,
-				8D61BEB22A104B60A5A71826 /* Info.plist */,
+				0C6C0380F35049D3AB243AB5 /* Info.plist */,
 				EA8F31F250821C2E42D0325F /* NerkhCheckWidget.entitlements */,
 			);
 			path = NerkhCheckWidget;
