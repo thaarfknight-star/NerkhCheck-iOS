@@ -14,7 +14,6 @@
 		69E4D2D025B79E9893BCBE9B = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/Models.swift; sourceTree = <group>; };
 		71332B4B13E634A20A883108 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NerkhCheckWidget.swift; sourceTree = <group>; };
 		8D61BEB22A104B60A5A71826 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = <group>; };
-		8D61BEB22A104B60A5A71826 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = <group>; };
 		8F9B3A24C2BA73EAC41969A9 = {isa = PBXFileReference; explicitFileType = wrapper.application; path = NerkhCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D58F2AE380D9EEC6A77F7515 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/PriceRepository.swift; sourceTree = <group>; };
 		D9E819FF347359DE0E30C4A9 = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = <group>; };
