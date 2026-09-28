@@ -51,23 +51,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2185D6C543AC31D446E4AD75 /* Views/MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/MainTabView.swift; sourceTree = "<group>"; };
+		2185D6C543AC31D446E4AD75 /* Views/MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		257527E81879BDF55D516962 /* NerkhCheck.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NerkhCheck.entitlements; sourceTree = "<group>"; };
-		2E4907C4DAADF31785A07A71 /* Views/ConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/ConverterView.swift; sourceTree = "<group>"; };
-		50E810369B1274C5ACAF12CE /* ViewModels/AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModels/AppState.swift; sourceTree = "<group>"; };
-		60047FA7F5982AAEF70D433C /* Models/AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/AppTheme.swift; sourceTree = "<group>"; };
-		69E4D2D025B79E9893BCBE9B /* Models/Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models/Models.swift; sourceTree = "<group>"; };
+		2E4907C4DAADF31785A07A71 /* Views/ConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterView.swift; sourceTree = "<group>"; };
+		50E810369B1274C5ACAF12CE /* ViewModels/AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		60047FA7F5982AAEF70D433C /* Models/AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		69E4D2D025B79E9893BCBE9B /* Models/Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		71332B4B13E634A20A883108 /* NerkhCheckWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NerkhCheckWidget.swift; sourceTree = "<group>"; };
 		8D61BEB22A104B60A5A71826 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F9B3A24C2BA73EAC41969A9 /* NerkhCheck.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = NerkhCheck.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D58F2AE380D9EEC6A77F7515 /* Services/PriceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/PriceRepository.swift; sourceTree = "<group>"; };
+		D58F2AE380D9EEC6A77F7515 /* Services/PriceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRepository.swift; sourceTree = "<group>"; };
 		D9E819FF347359DE0E30C4A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E18FFB671DC10684FDBB2423 /* Views/SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/SettingsView.swift; sourceTree = "<group>"; };
-		E2BBDDE194714E3F6D960805 /* Util/Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util/Formatters.swift; sourceTree = "<group>"; };
+		E18FFB671DC10684FDBB2423 /* Views/SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E2BBDDE194714E3F6D960805 /* Util/Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		EA8F31F250821C2E42D0325F /* NerkhCheckWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NerkhCheckWidget.entitlements; sourceTree = "<group>"; };
 		EC4F5D5B82748F9D7B9E8140 /* NerkhCheckWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; path = NerkhCheckWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F10EB2BF7780B87231B508A7 /* NerkhCheckApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NerkhCheckApp.swift; sourceTree = "<group>"; };
-		FDBD0845FF4EDE8F45DDA027 /* Views/PriceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views/PriceListView.swift; sourceTree = "<group>"; };
+		FDBD0845FF4EDE8F45DDA027 /* Views/PriceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
