@@ -329,9 +329,9 @@
 		2400F71B974292CB576F1869 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = NerkhCheck/NerkhCheckWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = NerkhCheckWidget/NerkhCheckWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = NerkhCheck/NerkhCheckWidget/Info.plist;
+				INFOPLIST_FILE = NerkhCheckWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -458,9 +458,9 @@
 		F6BAC4A516C70E3DCDCADAFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = NerkhCheck/NerkhCheckWidget.entitlements;
+				CODE_SIGN_ENTITLEMENTS = NerkhCheckWidget/NerkhCheckWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = NerkhCheck/NerkhCheckWidget/Info.plist;
+				INFOPLIST_FILE = NerkhCheckWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
