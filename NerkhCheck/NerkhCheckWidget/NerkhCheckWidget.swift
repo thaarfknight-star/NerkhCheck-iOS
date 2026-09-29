@@ -10,11 +10,12 @@ struct PriceEntry: TimelineEntry {
     let dollar: PriceItem?
     let gold18: PriceItem?
     let sekee: PriceItem?
+    let hasStale: Bool
 }
 
 struct PriceProvider: TimelineProvider {
     func placeholder(in context: Context) -> PriceEntry {
-        PriceEntry(date: Date(), theme: appThemes[0], dollar: nil, gold18: nil, sekee: nil)
+        PriceEntry(date: Date(), theme: appThemes[0], dollar: nil, gold18: nil, sekee: nil, hasStale: false)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (PriceEntry) -> Void) {
@@ -33,15 +34,18 @@ struct PriceProvider: TimelineProvider {
     }
 
     private func makeEntry() async -> PriceEntry {
-        let themeId = UserDefaults(suiteName: "group.com.chandeh.app")?.string(forKey: "theme_id")
-        let theme = appTheme(id: themeId)
-        let items = try? await PriceRepository.fetchPrices()
+        let gd = UserDefaults(suiteName: "group.com.chandeh.app")
+        let theme = appTheme(id: gd?.string(forKey: "theme_id"))
+        let brsKey = gd?.string(forKey: Prefs.brsApiKey)
+        let cache = gd.map { PriceCache(defaults: $0) }
+        let items = await PriceRepository.fetchPrices(brsApiKey: brsKey, cache: cache)
         return PriceEntry(
             date: Date(),
             theme: theme,
-            dollar: items?.first(where: { $0.code == "price_dollar_rl" }),
-            gold18: items?.first(where: { $0.code == "geram18" }),
-            sekee: items?.first(where: { $0.code == "sekee" })
+            dollar: items.first(where: { $0.code == "price_dollar_rl" }),
+            gold18: items.first(where: { $0.code == "geram18" }),
+            sekee: items.first(where: { $0.code == "sekee" }),
+            hasStale: items.contains { $0.isStale }
         )
     }
 }
@@ -115,6 +119,11 @@ struct NerkhCheckWidgetView: View {
                         .foregroundColor(positive ? profitGreen : lossRed)
                     if !dollar.updatedAt.isEmpty {
                         Text("به‌روزرسانی \(dollar.updatedAt.toFaDigits())")
+                            .font(.system(size: 12))
+                            .foregroundColor(widgetMuted)
+                    }
+                    if dollar.isStale {
+                        Text("ذخیره‌شده")
                             .font(.system(size: 12))
                             .foregroundColor(widgetMuted)
                     }

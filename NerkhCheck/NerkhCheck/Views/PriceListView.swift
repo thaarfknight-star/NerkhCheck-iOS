@@ -41,6 +41,22 @@ struct PriceListView: View {
                             if let dollar = pricesVM.items.first(where: { $0.code == "price_dollar_rl" }) {
                                 HeroCard(item: dollar)
                             }
+                            // اعلام وضعیت: وقتی بخشی از قیمت‌ها زنده نیستند
+                            if pricesVM.hasStale {
+                                HStack(spacing: 8) {
+                                    Image(systemName: "wifi.slash")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(appMuted)
+                                    Text("برخی قیمت‌ها به‌روز نشدند و از حافظه نمایش داده می‌شوند")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(appMuted)
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 10)
+                                .background(appSurfaceVariant.opacity(0.6))
+                                .cornerRadius(12)
+                            }
                             ForEach(categories, id: \.self) { cat in
                                 let list = pricesVM.items.filter {
                                     $0.category == cat && $0.code != "price_dollar_rl"
@@ -128,6 +144,11 @@ struct HeroCard: View {
                         .font(.system(size: 12))
                         .foregroundColor(appMuted)
                 }
+                if item.isStale {
+                    Text("ذخیره‌شده")
+                        .font(.system(size: 12))
+                        .foregroundColor(appMuted)
+                }
                 Spacer()
             }
             .padding(.horizontal, 20)
@@ -174,14 +195,21 @@ struct CategoryHeader: View {
 struct PriceRow: View {
     let item: PriceItem
 
+    private var sub: String {
+        var parts: [String] = []
+        if !item.updatedAt.isEmpty { parts.append(item.updatedAt.toFaDigits()) }
+        if item.isStale { parts.append("ذخیره‌شده") }
+        return parts.joined(separator: " • ")
+    }
+
     var body: some View {
         HStack {
             VStack(alignment: .trailing, spacing: 2) {
                 Text(item.titleFa)
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundColor(appText)
-                if !item.updatedAt.isEmpty {
-                    Text(item.updatedAt.toFaDigits())
+                if !sub.isEmpty {
+                    Text(sub)
                         .font(.system(size: 11))
                         .foregroundColor(appMuted)
                 }

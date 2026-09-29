@@ -2,6 +2,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var dataSettings: DataSettings
+    @State private var draftKey = ""
 
     private let columns = [
         GridItem(.flexible()),
@@ -19,6 +21,38 @@ struct SettingsView: View {
                 appBackground.ignoresSafeArea()
                 ScrollView {
                     VStack(spacing: 12) {
+                        // داده‌ها و اینترنت ملی
+                        SettingsCard {
+                            VStack(spacing: 12) {
+                                HStack {
+                                    Image(systemName: "coloncurrencysign")
+                                        .foregroundColor(themeManager.theme.accent)
+                                    Text("داده‌ها و اینترنت ملی")
+                                        .font(.system(size: 16, weight: .bold))
+                                        .foregroundColor(appText)
+                                    Spacer()
+                                }
+                                Text("روی اینترنت ملی، قیمت طلا و بخشی از سکه‌ها به‌صورت زنده دریافت می‌شود. برای قیمت لحظه‌ای دلار و ارزها هم، کلید رایگان BRS را وارد کنید؛ در غیر این صورت آخرین قیمت ذخیره‌شده نمایش داده می‌شود.")
+                                    .font(.system(size: 13))
+                                    .foregroundColor(appMuted)
+                                TextField("کلید BRS API (اختیاری)", text: $draftKey)
+                                    .textFieldStyle(.roundedBorder)
+                                HStack {
+                                    Button("ذخیره") {
+                                        dataSettings.save(draftKey)
+                                    }
+                                    .buttonStyle(.borderedProminent)
+                                    .tint(themeManager.theme.accent)
+                                    Link("دریافت کلید رایگان", destination: URL(string: "https://brsapi.ir/tsetmc-exchange-free-bourse-api-key-request/")!)
+                                }
+                                if !dataSettings.brsApiKey.isEmpty {
+                                    Text("✓ کلید ذخیره شده و برای به‌روزرسانی بعدی استفاده می‌شود")
+                                        .font(.system(size: 12))
+                                        .foregroundColor(appMuted)
+                                }
+                            }
+                        }
+
                         // تم‌ها
                         SettingsCard {
                             VStack(spacing: 12) {
@@ -52,11 +86,11 @@ struct SettingsView: View {
                                     value: version
                                 )
                                 Divider().background(appSurfaceVariant)
-                                Link(destination: URL(string: "https://github.com/thaarfknight-star/Chandeh")!) {
+                                Link(destination: URL(string: "https://github.com/thaarfknight-star/NerkhCheck")!) {
                                     InfoRow(
                                         icon: "link",
                                         title: "گیت‌هاب",
-                                        value: "thaarfknight-star/Chandeh"
+                                        value: "thaarfknight-star/NerkhCheck"
                                     )
                                 }
                                 Divider().background(appSurfaceVariant)
@@ -79,6 +113,9 @@ struct SettingsView: View {
             }
             .navigationTitle("تنظیمات")
             .navigationBarTitleDisplayMode(.large)
+        }
+        .onAppear {
+            draftKey = dataSettings.brsApiKey
         }
     }
 }

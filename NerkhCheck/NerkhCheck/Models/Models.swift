@@ -46,7 +46,8 @@ let SYMBOLS: [SymbolDef] = [
     SymbolDef(code: "gerami", titleFa: "سکه گرمی", category: .coin),
 ]
 
-/// یک قلم قیمت — همه‌ی مبالغ به تومان
+/// یک قلم قیمت — همه‌ی مبالغ به تومان.
+/// isStale یعنی این قیمت زنده نیست و از حافظه‌ی (کش) برنامه آمده است.
 struct PriceItem: Identifiable, Hashable {
     let code: String
     let titleFa: String
@@ -55,6 +56,27 @@ struct PriceItem: Identifiable, Hashable {
     let changeToman: Int64
     let changePercent: Double
     let updatedAt: String
+    let isStale: Bool
+
+    init(
+        code: String,
+        titleFa: String,
+        category: Category,
+        priceToman: Int64,
+        changeToman: Int64,
+        changePercent: Double,
+        updatedAt: String,
+        isStale: Bool = false
+    ) {
+        self.code = code
+        self.titleFa = titleFa
+        self.category = category
+        self.priceToman = priceToman
+        self.changeToman = changeToman
+        self.changePercent = changePercent
+        self.updatedAt = updatedAt
+        self.isStale = isStale
+    }
 
     var id: String { code }
 }

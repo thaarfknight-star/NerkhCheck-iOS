@@ -31,25 +31,47 @@ class ThemeManager: ObservableObject {
     }
 }
 
+/// تنظیمات داده — کلید BRS در App Group ذخیره می‌شود تا ویجت هم به آن دسترسی داشته باشد
+@MainActor
+class DataSettings: ObservableObject {
+    @Published var brsApiKey: String = ""
+    private let defaults = UserDefaults(suiteName: appGroupId) ?? .standard
+
+    init() {
+        brsApiKey = defaults.string(forKey: Prefs.brsApiKey) ?? ""
+    }
+
+    func save(_ key: String) {
+        let trimmed = key.trimmingCharacters(in: .whitespacesAndNewlines)
+        brsApiKey = trimmed
+        defaults.set(trimmed, forKey: Prefs.brsApiKey)
+    }
+}
+
 /// وضعیت قیمت‌ها
 @MainActor
 class PricesViewModel: ObservableObject {
     @Published var items: [PriceItem] = []
     @Published var isLoading = false
     @Published var error: String?
+    /// true یعنی حداقل یک قیمت از کش (ذخیره‌شده) آمده، نه زنده
+    @Published var hasStale = false
+
+    private let defaults = UserDefaults(suiteName: appGroupId) ?? .standard
 
     func refresh() async {
         if isLoading { return }
         isLoading = true
         error = nil
-        do {
-            items = try await PriceRepository.fetchPrices()
-        } catch {
-            if let le = error as? LocalizedError, let desc = le.errorDescription {
-                self.error = desc
-            } else {
-                self.error = "دریافت قیمت‌ها ممکن نشد؛ دوباره تلاش کنید"
-            }
+        let key = defaults.string(forKey: Prefs.brsApiKey)
+        let cache = PriceCache(defaults: defaults)
+        let items = await PriceRepository.fetchPrices(brsApiKey: key, cache: cache)
+        if items.isEmpty {
+            self.error = PriceError.noInternet.errorDescription
+        } else {
+            self.items = items
+            self.hasStale = items.contains { $0.isStale }
+            self.error = nil
         }
         isLoading = false
     }
