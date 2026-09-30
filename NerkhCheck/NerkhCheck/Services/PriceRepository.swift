@@ -70,15 +70,20 @@ struct PriceCache {
     }
 }
 
-/// دریافت قیمت‌ها از چند منبع به‌صورت موازی، با ادغام بر اساس اولویت:
+/// دریافت قیمت‌ها از چند منبع به‌صورت موازی، با ادغام بر اساس اولویت
+/// (برای هر نماد، اولین منبعی که آن را داشته باشد استفاده می‌شود —
+///  منابع داخلی اول تا روی اینترنت ملی هم کار کند):
 ///
-///  ۱. BRS API (فقط اگر کلید داده شده باشد) — سرور ایران، همه‌ی نمادها
-///  ۲. صفحه‌ی اصلی TGJU — هاست خارجی (Cloudflare)، همه‌ی نمادها
-///  ۳. tala.ir — سرور ایران، طلا و بخشی از سکه‌ها (بدون نیاز به کلید)
-///  ۴. وب‌سرویس اسنیپت TGJU — هاست خارجی، همه‌ی نمادها
+///  ۱. BRS API (فقط اگر کلید داده شده باشد) — سرور ایران، ارز و طلا
+///  ۲. نوبیتکس (بدون کلید) — سرور ایران، ارز دیجیتال (بیت‌کوین/اتریوم/تتر)
+///  ۳. tala.ir (بدون کلید) — سرور ایران، طلا و بخشی از سکه‌ها
+///  ۴. صفحه‌ی اصلی TGJU — هاست خارجی، همه‌ی نمادها + بیت‌کوین و تتر
+///  ۵. وب‌سرویس اسنیپت TGJU — هاست خارجی، ارز و طلا و سکه
+///  ۶. کوین‌گکو (بدون کلید) — هاست خارجی، ارز دیجیتال؛ فقط برای کریپتوهای
+///     جامانده و با تبدیل دلار به تومان
 ///
-/// برای هر نماد، اولین منبعی که آن را داشته باشد استفاده می‌شود؛ نمادهای
-/// بدون داده‌ی زنده از کش پر می‌شوند (isStale=true) تا اپ هیچ‌وقت خالی نماند.
+/// نمادهای بدون داده‌ی زنده از کش پر می‌شوند (isStale=true) تا اپ هیچ‌وقت
+/// خالی نماند.
 struct PriceRepository {
 
     static let homepageURL = URL(string: "https://www.tgju.org/")!
@@ -86,6 +91,12 @@ struct PriceRepository {
         "http://platform.tgju.org/fa/api/webservice-snippet/?token=webservice&opts=diff,time&placeholder=tgju-data&items="
     static let talaURL = URL(string: "https://www.tala.ir/ajax/price")!
     static let brsBase = "https://api.brsapi.ir/Market/Gold_Currency.php?key="
+    /// نوبیتکس — سرور ایران، بدون نیاز به کلید (ارز دیجیتال)
+    static let nobitexURL = URL(string: "https://apiv2.nobitex.ir/market/stats")!
+    /// کوین‌گکو — هاست خارجی، بدون نیاز به کلید (ارز دیجیتال، به دلار)
+    static let coingeckoURL = URL(string:
+        "https://api.coingecko.com/api/v3/simple/price" +
+        "?ids=bitcoin,ethereum,tether&vs_currencies=usd&include_24hr_change=true")!
 
     private static let userAgent =
         "Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Mobile Safari/537.36"
@@ -102,17 +113,54 @@ struct PriceRepository {
         return String(data: data, encoding: .utf8) ?? ""
     }
 
+    /// POST با بدنه‌ی JSON (برای نوبیتکس)
+    private static func fetchPost(_ url: URL, jsonBody: String) async throws -> String {
+        var req = URLRequest(url: url, timeoutInterval: 15)
+        req.httpMethod = "POST"
+        req.setValue(userAgent, forHTTPHeaderField: "User-Agent")
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.setValue("no-cache", forHTTPHeaderField: "Cache-Control")
+        req.httpBody = jsonBody.data(using: .utf8)
+        let (data, resp) = try await URLSession.shared.data(for: req)
+        guard let http = resp as? HTTPURLResponse, (200..<300).contains(http.statusCode) else {
+            throw PriceError.noInternet
+        }
+        return String(data: data, encoding: .utf8) ?? ""
+    }
+
     static func fetchPrices(brsApiKey: String? = nil, cache: PriceCache? = nil) async -> [PriceItem] {
         let key = (brsApiKey ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         async let brs: [PriceItem]? = fetchBrs(key: key)
+        async let nbBtc: PriceItem? = fetchNobitex(src: "btc", appCode: "btc")
+        async let nbEth: PriceItem? = fetchNobitex(src: "eth", appCode: "eth")
+        async let nbUsdt: PriceItem? = fetchNobitex(src: "usdt", appCode: "usdt")
         async let tgju: [PriceItem]? = fetchTgju()
         async let tala: [PriceItem]? = fetchTala(cache: cache)
         async let snippet: [PriceItem]? = fetchSnippet()
+        // ترتیب ادغام = اولویت منابع داخلی: نوبیتکس اول (کریپتو، سرور ایران)
         let ordered = await [brs, tgju, tala, snippet]
         var merged: [String: PriceItem] = [:]
+        for item in await [nbBtc, nbEth, nbUsdt] {
+            if let item, merged[item.code] == nil { merged[item.code] = item }
+        }
         for list in ordered {
             for item in list ?? [] where merged[item.code] == nil {
                 merged[item.code] = item
+            }
+        }
+
+        // فاز دوم: کوین‌گکو (خارجی) فقط برای کریپتوهای جامانده؛
+        // به نرخ دلار نیاز دارد پس بعد از ادغام فاز اول اجرا می‌شود
+        let dollarToman = merged["price_dollar_rl"]?.priceToman
+            ?? cache?.load()["price_dollar_rl"]?.priceToman
+        let missingCrypto = SYMBOLS.contains {
+            $0.category == .crypto && merged[$0.code] == nil
+        }
+        if missingCrypto, let dollarToman, dollarToman > 0 {
+            if let cg = await fetchCoinGecko(dollarToman: dollarToman) {
+                for (code, item) in cg where merged[code] == nil {
+                    merged[code] = item
+                }
             }
         }
         let cached = cache?.load() ?? [:]
@@ -152,10 +200,26 @@ struct PriceRepository {
     }
 
     private static func fetchSnippet() async -> [PriceItem]? {
-        let itemsParam = SYMBOLS.map { $0.code }.joined(separator: ",")
+        // اسنیپت فقط نمادهای غیرکریپتو را می‌شناسد و نگاشتش موقعیتی است؛
+        // پس کریپتوها از درخواست حذف می‌شوند
+        let defs = SYMBOLS.filter { $0.category != .crypto }
+        let itemsParam = defs.map { $0.code }.joined(separator: ",")
         guard let url = URL(string: snippetBase + itemsParam),
               let body = try? await fetchText(url) else { return nil }
-        let items = (try? parseSnippet(body)) ?? []
+        let items = (try? parseSnippet(body, defs: defs)) ?? []
+        return items.isEmpty ? nil : items
+    }
+
+    private static func fetchNobitex(src: String, appCode: String) async -> PriceItem? {
+        guard let text = try? await fetchPost(
+            nobitexURL, jsonBody: "{\"srcCurrency\":\"\(src)\",\"dstCurrency\":\"rls\"}"
+        ) else { return nil }
+        return parseNobitex(text, appCode: appCode)
+    }
+
+    private static func fetchCoinGecko(dollarToman: Int64) async -> [String: PriceItem]? {
+        guard let text = try? await fetchText(coingeckoURL) else { return nil }
+        let items = parseCoinGecko(text, dollarToman: dollarToman)
         return items.isEmpty ? nil : items
     }
 
@@ -208,7 +272,8 @@ struct PriceRepository {
      */
     static func parseHomepage(_ html: String) throws -> [PriceItem] {
         var items: [PriceItem] = []
-        for def in SYMBOLS {
+        let fiatDefs = SYMBOLS.filter { $0.category != .crypto }
+        for def in fiatDefs {
             let rowPattern = "<tr[^>]*data-market-nameslug=\"" + def.code + "\".*?</tr>"
             guard let rowMatch = firstMatch(rowPattern, in: html) else { continue }
             let row = group(rowMatch, 0, in: html)
@@ -248,8 +313,68 @@ struct PriceRepository {
                 updatedAt: time
             ))
         }
-        if items.count < SYMBOLS.count / 2 {
+        if items.count < fiatDefs.count / 2 {
             throw PriceError.noInternet
+        }
+
+        // کریپتوهای زنده‌ی صفحه‌ی اصلی (سطرهای فشرده با data-price)؛
+        // بیت‌کوین به دلار است و با نرخ دلار به تومان تبدیل می‌شود، تتر به ریال
+        let dollarToman = items.first(where: { $0.code == "price_dollar_rl" })?.priceToman ?? 0
+        let cryptoTgju: [(slug: String, code: String, inUsd: Bool)] = [
+            ("crypto-bitcoin", "btc", true),
+            ("crypto-tether", "usdt", false),
+        ]
+        let defsByCode = Dictionary(uniqueKeysWithValues: SYMBOLS.map { ($0.code, $0) })
+        for (slug, code, inUsd) in cryptoTgju {
+            guard let def = defsByCode[code] else { continue }
+            let rowPattern = "<tr[^>]*data-market-nameslug=\"" + slug + "\".*?</tr>"
+            guard let rowMatch = firstMatch(rowPattern, in: html) else { continue }
+            let row = group(rowMatch, 0, in: html)
+            guard let pm = firstMatch("data-price=\"([\\d.,]+)\"", in: row),
+                  let priceRaw = Double(group(pm, 1, in: row).replacingOccurrences(of: ",", with: ""))
+            else { continue }
+
+            var sign: Int64 = 1
+            var pct: Double = 0
+            var changeRaw: Double = 0
+            if let cm = firstMatch(
+                "<span class=\"(high|low)\">\\(([-\\d.]+)%\\)\\s*(-?[\\d,]+)</span>",
+                in: row
+            ) {
+                let dir = group(cm, 1, in: row)
+                pct = Double(group(cm, 2, in: row)) ?? 0
+                changeRaw = Double(group(cm, 3, in: row).replacingOccurrences(of: ",", with: "")) ?? 0
+                sign = (dir == "low") ? -1 : 1
+            }
+
+            var time = ""
+            if let tm = firstMatch(
+                "<td[^>]*>([\\d۰-۹]{1,2}:[\\d۰-۹]{2}(?::[\\d۰-۹]{2})?)</td>",
+                in: row
+            ) {
+                time = group(tm, 1, in: row)
+            }
+
+            let priceToman: Int64
+            let changeToman: Int64
+            if inUsd {
+                guard dollarToman > 0 else { continue }
+                priceToman = Int64(priceRaw * Double(dollarToman))
+                changeToman = sign * Int64(changeRaw * Double(dollarToman))
+            } else {
+                // ریال -> تومان
+                priceToman = Int64(priceRaw / 10)
+                changeToman = sign * Int64(changeRaw / 10)
+            }
+            items.append(PriceItem(
+                code: def.code,
+                titleFa: def.titleFa,
+                category: def.category,
+                priceToman: priceToman,
+                changeToman: changeToman,
+                changePercent: Double(sign) * abs(pct),
+                updatedAt: time
+            ))
         }
         return items
     }
@@ -259,8 +384,9 @@ struct PriceRepository {
     /**
      * پارس وب‌سرویس اسنیپت (جایگزین) — نمونه سطر:
      *   | سکه امامی | 2,465,050,000 | (2.49%) 60,000,000 | ۱۴:۱۰:۴۹ |
+     * نگاشت موقعیتی است: ترتیب سطرها همان ترتیب defs درخواستی است.
      */
-    static func parseSnippet(_ body: String) throws -> [PriceItem] {
+    static func parseSnippet(_ body: String, defs: [SymbolDef]) throws -> [PriceItem] {
         let pattern = "\\|\\s*([^|]+?)\\s*\\|\\s*([\\d,]+)\\s*\\|\\s*\\(?\\s*(-?[\\d.]+)\\s*%\\s*\\)?\\s*(-?[\\d,]+)\\s*\\|\\s*([^|]*?)\\s*\\|"
         let ns = body as NSString
         let matches = makeRegex(pattern).matches(
@@ -270,8 +396,8 @@ struct PriceRepository {
         if matches.isEmpty {
             throw PriceError.noInternet
         }
-        return matches.prefix(SYMBOLS.count).enumerated().map { index, m in
-            let def = SYMBOLS[index]
+        return matches.prefix(defs.count).enumerated().map { index, m in
+            let def = defs[index]
             let priceRial = Int64(group(m, 2, in: body).replacingOccurrences(of: ",", with: "")) ?? 0
             let pct = Double(group(m, 3, in: body)) ?? 0
             let chgRial = Int64(group(m, 4, in: body).replacingOccurrences(of: ",", with: "")) ?? 0
@@ -287,6 +413,70 @@ struct PriceRepository {
                 updatedAt: time
             )
         }
+    }
+
+    // MARK: - نوبیتکس: سرور ایران (ارز دیجیتال)
+
+    /**
+     * پارس پاسخ POST https://apiv2.nobitex.ir/market/stats
+     * مبالغ به ریال‌اند -> تقسیم بر ۱۰ برای تومان.
+     */
+    static func parseNobitex(_ text: String, appCode: String) -> PriceItem? {
+        guard let data = text.data(using: .utf8),
+              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              (json["status"] as? String) == "ok",
+              let stats = json["stats"] as? [String: Any],
+              let s = stats.values.first as? [String: Any],
+              let latestStr = s["latest"] as? String,
+              let latestRial = Double(latestStr),
+              latestRial > 0,
+              let def = SYMBOLS.first(where: { $0.code == appCode })
+        else { return nil }
+        let pct = Double(s["dayChange"] as? String ?? "") ?? 0
+        let priceToman = Int64(latestRial / 10)
+        return PriceItem(
+            code: def.code,
+            titleFa: def.titleFa,
+            category: def.category,
+            priceToman: priceToman,
+            changeToman: Int64(Double(priceToman) * pct / 100),
+            changePercent: pct,
+            updatedAt: ""
+        )
+    }
+
+    // MARK: - کوین‌گکو: هاست خارجی (ارز دیجیتال)
+
+    /**
+     * پارس پاسخ CoinGecko — قیمت‌ها به دلارند و با نرخ دلار به تومان
+     * تبدیل می‌شوند. فقط برای کریپتوهای جامانده از منابع دیگر صدا زده می‌شود.
+     */
+    static func parseCoinGecko(_ text: String, dollarToman: Int64) -> [String: PriceItem] {
+        guard dollarToman > 0,
+              let data = text.data(using: .utf8),
+              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        else { return [:] }
+        let map = ["bitcoin": "btc", "ethereum": "eth", "tether": "usdt"]
+        let defsByCode = Dictionary(uniqueKeysWithValues: SYMBOLS.map { ($0.code, $0) })
+        var out: [String: PriceItem] = [:]
+        for (cgId, appCode) in map {
+            guard let o = json[cgId] as? [String: Any],
+                  let usd = o["usd"] as? Double, usd > 0,
+                  let def = defsByCode[appCode]
+            else { continue }
+            let pct = o["usd_24h_change"] as? Double ?? 0
+            let priceToman = Int64(usd * Double(dollarToman))
+            out[appCode] = PriceItem(
+                code: def.code,
+                titleFa: def.titleFa,
+                category: def.category,
+                priceToman: priceToman,
+                changeToman: Int64(Double(priceToman) * pct / 100),
+                changePercent: pct,
+                updatedAt: ""
+            )
+        }
+        return out
     }
 
     // MARK: - tala.ir: سرور ایران (طلا و بخشی از سکه‌ها)

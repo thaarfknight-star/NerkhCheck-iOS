@@ -2,13 +2,14 @@ import Foundation
 
 /// دسته‌بندی نمادها
 enum Category: String, Hashable {
-    case currency, gold, coin
+    case currency, gold, coin, crypto
 
     var titleFa: String {
         switch self {
         case .currency: return "ارزها"
         case .gold: return "طلا"
         case .coin: return "سکه"
+        case .crypto: return "ارز دیجیتال"
         }
     }
 }
@@ -44,6 +45,10 @@ let SYMBOLS: [SymbolDef] = [
     SymbolDef(code: "nim", titleFa: "نیم‌سکه", category: .coin),
     SymbolDef(code: "rob", titleFa: "ربع‌سکه", category: .coin),
     SymbolDef(code: "gerami", titleFa: "سکه گرمی", category: .coin),
+    // ارز دیجیتال
+    SymbolDef(code: "btc", titleFa: "بیت‌کوین", category: .crypto),
+    SymbolDef(code: "eth", titleFa: "اتریوم", category: .crypto),
+    SymbolDef(code: "usdt", titleFa: "تتر", category: .crypto),
 ]
 
 /// یک قلم قیمت — همه‌ی مبالغ به تومان.

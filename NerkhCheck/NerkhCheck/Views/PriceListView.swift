@@ -4,7 +4,7 @@ struct PriceListView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var pricesVM: PricesViewModel
 
-    private let categories: [Category] = [.currency, .gold, .coin]
+    private let categories: [Category] = [.currency, .gold, .coin, .crypto]
 
     var body: some View {
         NavigationStack {
